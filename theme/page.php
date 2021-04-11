@@ -1,43 +1,32 @@
 <?php
 /**
- * The template for displaying all pages
+ * The template for displaying all pages.
  *
  * This is the template that displays all pages by default.
  * Please note that this is the WordPress construct of pages
- * and that other 'pages' on your WordPress site may use a
+ * and that other 'pages' on your WordPress site will use a
  * different template.
  *
- * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
- *
- * @package WordPress
- * @subpackage Twenty_Seventeen
- * @since 1.0
- * @version 1.0
+ * @package Getfit Lite
  */
 
 get_header(); ?>
+  <div class="main-container">
+<div class="content-area">
+    <div class="middle-align content_sidebar">
+        <div class="site-main" id="sitemain">
+			<?php while ( have_posts() ) : the_post(); ?>
+                <?php get_template_part( 'content', 'page' ); ?>
+                <?php
+                //If comments are open or we have at least one comment, load up the comment template
+                	if ( comments_open() || '0' != get_comments_number() )
+                    	comments_template();
+                ?>
+            <?php endwhile; // end of the loop. ?>
+        </div>
+        <?php get_sidebar(); ?>
+        <div class="clear"></div>
+    </div>
+</div><div class="clear"></div>
 
-<div class="wrap">
-	<div id="primary" class="content-area">
-		<main id="main" class="site-main" role="main">
-
-			<?php
-			while ( have_posts() ) :
-				the_post();
-
-				get_template_part( 'template-parts/page/content', 'page' );
-
-				// If comments are open or we have at least one comment, load up the comment template.
-				if ( comments_open() || get_comments_number() ) :
-					comments_template();
-				endif;
-
-			endwhile; // End of the loop.
-			?>
-
-		</main><!-- #main -->
-	</div><!-- #primary -->
-</div><!-- .wrap -->
-
-<?php
-get_footer();
+<?php get_footer(); ?>

@@ -1,58 +1,69 @@
-<?php
+ <?php
 /**
- * The header for our theme
+ * The Header for our theme.
  *
- * This is the template that displays all of the <head> section and everything up until <div id="content">
+ * Displays all of the <head> section and everything up till <div id="content">
  *
- * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
- *
- * @package WordPress
- * @subpackage Twenty_Seventeen
- * @since 1.0
- * @version 1.0
+ * @package Getfit Lite
  */
-
 ?><!DOCTYPE html>
-<html <?php language_attributes(); ?> class="no-js no-svg">
+<html <?php language_attributes(); ?>>
 <head>
 <meta charset="<?php bloginfo( 'charset' ); ?>">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width">
 <link rel="profile" href="http://gmpg.org/xfn/11">
-
+<?php if ( is_singular() && pings_open( get_queried_object() ) ) : ?>
+	<link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>">
+<?php endif; ?>
 <?php wp_head(); ?>
 </head>
 
 <body <?php body_class(); ?>>
-<?php wp_body_open(); ?>
-<div id="page" class="site">
-	<a class="skip-link screen-reader-text" href="#content"><?php _e( 'Skip to content', 'twentyseventeen' ); ?></a>
-
-	<header id="masthead" class="site-header" role="banner">
-
-		<?php get_template_part( 'template-parts/header/header', 'image' ); ?>
-
-		<?php if ( has_nav_menu( 'top' ) ) : ?>
-			<div class="navigation-top">
-				<div class="wrap">
-					<?php get_template_part( 'template-parts/navigation/navigation', 'top' ); ?>
-				</div><!-- .wrap -->
-			</div><!-- .navigation-top -->
-		<?php endif; ?>
-
-	</header><!-- #masthead -->
-
 	<?php
+	//wp_body_open hook from WordPress 5.2
+	if ( function_exists( 'wp_body_open' ) ) {
+	    wp_body_open();
+	}else{
+		do_action( 'wp_body_open' ); 
+	}
+?>
+<a class="skip-link screen-reader-text" href="#sitemain"><?php _e( 'Skip to content', 'getfit-lite' ); ?></a>
+<?php $hidetopbar = get_theme_mod('hide_topbar', '1'); ?>
+<?php if($hidetopbar == ''){ ?>
+<div class="header-top">
+  <div class="head-top-inner">
+     		<div class="top-left">
+            	<span> <?php echo esc_attr(get_theme_mod('phone')); ?></span> 
+            </div><!-- top-left -->
+            <div class="top-right">
+            	<a href="<?php echo esc_url('mailto:'.get_theme_mod('email')); ?>"><?php echo esc_html(get_theme_mod('email')); ?></a>
+            </div><!-- top-right --><div class="clear"></div>
+  </div><!-- head-top-inner -->
+</div><!--end header-top--> 
+<?php } ?>
 
-	/*
-	 * If a regular post or page, and not the front page, show the featured image.
-	 * Using get_queried_object_id() here since the $post global may not be set before a call to the_post().
-	 */
-	if ( ( is_single() || ( is_page() && ! twentyseventeen_is_frontpage() ) ) && has_post_thumbnail( get_queried_object_id() ) ) :
-		echo '<div class="single-featured-image-header">';
-		echo get_the_post_thumbnail( get_queried_object_id(), 'twentyseventeen-featured-image' );
-		echo '</div><!-- .single-featured-image-header -->';
-	endif;
-	?>
 
-	<div class="site-content-contain">
-		<div id="content" class="site-content">
+<div id="header">
+	<div class="header-inner">
+      <div class="logo">
+           <?php getfit_lite_the_custom_logo(); ?>
+			    <h1><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php esc_attr(bloginfo( 'name' )); ?></a></h1>
+					<?php $description = get_bloginfo( 'description', 'display' );
+						if ( $description || is_customize_preview() ) : ?>
+						<p><?php echo esc_attr($description); ?></p>
+					<?php endif; ?>
+      </div><!-- logo -->                    
+    <div class="header_right"> 
+        		 <div class="toggle">
+            <a class="toggleMenu" href="#">
+                <?php esc_html_e('Menu','getfit-lite'); ?>                
+            </a>
+    	</div><!-- toggle -->    
+    <div class="sitenav">                   
+   	 	<?php wp_nav_menu( array('theme_location' => 'primary') ); ?> 
+    </div><!--.sitenav -->
+        <div class="clear"></div>
+    </div><!--header_right-->    
+ <div class="clear"></div>
+</div><!-- .header-inner-->
+</div><!-- .header -->

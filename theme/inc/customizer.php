@@ -1,10 +1,8 @@
 <?php
 /**
- * Twenty Seventeen: Customizer
+ * Getfit Lite Theme Customizer
  *
- * @package WordPress
- * @subpackage Twenty_Seventeen
- * @since 1.0
+ * @package Getfit Lite
  */
 
 /**
@@ -12,238 +10,253 @@
  *
  * @param WP_Customize_Manager $wp_customize Theme Customizer object.
  */
-function twentyseventeen_customize_register( $wp_customize ) {
+function getfit_lite_customize_register( $wp_customize ) {
+	
+function getfit_lite_sanitize_checkbox( $checked ) {
+	// Boolean check.
+	return ( ( isset( $checked ) && true == $checked ) ? true : false );
+}
+	
 	$wp_customize->get_setting( 'blogname' )->transport         = 'postMessage';
 	$wp_customize->get_setting( 'blogdescription' )->transport  = 'postMessage';
-	$wp_customize->get_setting( 'header_textcolor' )->transport = 'postMessage';
-
-	$wp_customize->selective_refresh->add_partial(
-		'blogname',
-		array(
-			'selector'        => '.site-title a',
-			'render_callback' => 'twentyseventeen_customize_partial_blogname',
-		)
-	);
-	$wp_customize->selective_refresh->add_partial(
-		'blogdescription',
-		array(
-			'selector'        => '.site-description',
-			'render_callback' => 'twentyseventeen_customize_partial_blogdescription',
-		)
-	);
-
-	/**
-	 * Custom colors.
-	 */
-	$wp_customize->add_setting(
-		'colorscheme',
-		array(
-			'default'           => 'light',
-			'transport'         => 'postMessage',
-			'sanitize_callback' => 'twentyseventeen_sanitize_colorscheme',
-		)
-	);
-
-	$wp_customize->add_setting(
-		'colorscheme_hue',
-		array(
-			'default'           => 250,
-			'transport'         => 'postMessage',
-			'sanitize_callback' => 'absint', // The hue is stored as a positive integer.
-		)
-	);
-
+		
+	$wp_customize->add_setting('color_scheme', array(
+		'default' => '#e37e12',
+		'sanitize_callback'	=> 'sanitize_hex_color',
+	));
+	
 	$wp_customize->add_control(
-		'colorscheme',
-		array(
-			'type'     => 'radio',
-			'label'    => __( 'Color Scheme', 'twentyseventeen' ),
-			'choices'  => array(
-				'light'  => __( 'Light', 'twentyseventeen' ),
-				'dark'   => __( 'Dark', 'twentyseventeen' ),
-				'custom' => __( 'Custom', 'twentyseventeen' ),
-			),
-			'section'  => 'colors',
-			'priority' => 5,
-		)
+		new WP_Customize_Color_Control($wp_customize,'color_scheme',array(
+			'label' => __('Color Scheme','getfit-lite'),
+			'description'	=> __('Select color from here.','getfit-lite'),
+			'section' => 'colors',
+			'settings' => 'color_scheme'
+		))
 	);
-
+	
+	$wp_customize->add_setting('topbar-color', array(
+		'default' => '#000000',
+		'sanitize_callback'	=> 'sanitize_hex_color',
+	));
+	
 	$wp_customize->add_control(
-		new WP_Customize_Color_Control(
-			$wp_customize,
-			'colorscheme_hue',
-			array(
-				'mode'     => 'hue',
-				'section'  => 'colors',
-				'priority' => 6,
-			)
-		)
+		new WP_Customize_Color_Control($wp_customize,'topbar-color',array(
+			'label' => __('Topbar background color','getfit-lite'),
+			'description'	=> __('Select topbar background color from here.','getfit-lite'),
+			'section' => 'colors',
+			'settings' => 'topbar-color'
+		))
 	);
-
-	/**
-	 * Theme options.
-	 */
+	
+	$wp_customize->add_setting('header-color', array(
+		'default' => '#000000',
+		'sanitize_callback'	=> 'sanitize_hex_color',
+	));
+	
+	$wp_customize->add_control(
+		new WP_Customize_Color_Control($wp_customize,'header-color',array(
+			'label' => __('Header background color','getfit-lite'),
+			'description'	=> __('Select header background color from here.','getfit-lite'),
+			'section' => 'colors',
+			'settings' => 'header-color'
+		))
+	);
+	
+	$wp_customize->add_setting('footer-color', array(
+		'default' => '#282a2b',
+		'sanitize_callback'	=> 'sanitize_hex_color',
+	));
+	
+	$wp_customize->add_control(
+		new WP_Customize_Color_Control($wp_customize,'footer-color',array(
+			'label' => __('Footer background color','getfit-lite'),
+			'description'	=> __('Select footer background color from here.','getfit-lite'),
+			'section' => 'colors',
+			'settings' => 'footer-color'
+		))
+	);
+	
+	// Slider Section Start		
 	$wp_customize->add_section(
-		'theme_options',
-		array(
-			'title'    => __( 'Theme Options', 'twentyseventeen' ),
-			'priority' => 130, // Before Additional CSS.
-		)
-	);
+        'slider_section',
+        array(
+            'title' => __('Slider Settings', 'getfit-lite'),
+            'priority' => null,
+			'description'	=> __('Recommended image size (1420x567). Slider will be visible only when you select static front page.','getfit-lite'),	
+        )
+    );
+	
+	$wp_customize->add_setting('page-setting7',array(
+			'default' => '0',
+			'capability' => 'edit_theme_options',
+			'sanitize_callback'	=> 'absint'
+	));
+	
+	$wp_customize->add_control('page-setting7',array(
+			'type'	=> 'dropdown-pages',
+			'label'	=> __('Select page for slide one:','getfit-lite'),
+			'section'	=> 'slider_section'
+	));	
+	
+	$wp_customize->add_setting('page-setting8',array(
+			'default' => '0',
+			'capability' => 'edit_theme_options',	
+			'sanitize_callback'	=> 'absint'
+	));
+	
+	$wp_customize->add_control('page-setting8',array(
+			'type'	=> 'dropdown-pages',
+			'label'	=> __('Select page for slide two:','getfit-lite'),
+			'section'	=> 'slider_section'
+	));	
+	
+	$wp_customize->add_setting('page-setting9',array(
+			'default' => '0',
+			'capability' => 'edit_theme_options',	
+			'sanitize_callback'	=> 'absint'
+	));
+	
+	$wp_customize->add_control('page-setting9',array(
+			'type'	=> 'dropdown-pages',
+			'label'	=> __('Select page for slide three:','getfit-lite'),
+			'section'	=> 'slider_section'
+	));	
+	
+	$wp_customize->add_setting('slide_text',array(
+		'default'	=> __('Join Now','getfit-lite'),
+		'sanitize_callback'	=> 'sanitize_text_field'
+	));
+	
+	$wp_customize->add_control('slide_text',array(
+		'label'	=> __('Add slider link button text.','getfit-lite'),
+		'section'	=> 'slider_section',
+		'setting'	=> 'slide_text',
+		'type'	=> 'text'
+	));
+	
+	$wp_customize->add_setting('hide_slider',array(
+			'default' => true,
+			'sanitize_callback' => 'getfit_lite_sanitize_checkbox',
+			'capability' => 'edit_theme_options',
+	));	 
 
-	$wp_customize->add_setting(
-		'page_layout',
-		array(
-			'default'           => 'two-column',
-			'sanitize_callback' => 'twentyseventeen_sanitize_page_layout',
-			'transport'         => 'postMessage',
-		)
-	);
+	$wp_customize->add_control( 'hide_slider', array(
+		   'settings' => 'hide_slider',
+    	   'section'   => 'slider_section',
+    	   'label'     => __('Check this to hide slider','getfit-lite'),
+    	   'type'      => 'checkbox'
+     ));	
+	
+	// Slider Section End
+	
+	
+	 // Topbar		
+	$wp_customize->add_section(
+        'topbar_section',
+        array(
+            'title' => __('Topbar', 'getfit-lite'),
+            'priority' => null,
+			'description'	=> __('Add content for topbar','getfit-lite'),	
+        )
+    );
+	
+	$wp_customize->add_setting('phone',array(
+			'default' => null,
+			'capability' => 'edit_theme_options',
+			'sanitize_callback'	=> 'sanitize_text_field'
+	));
+	
+	$wp_customize->add_control('phone',array(
+			'type'	=> 'text',
+			'label'	=> __('Add contact number.','getfit-lite'),
+			'section'	=> 'topbar_section'
+	));	
+	
+	$wp_customize->add_setting('email',array(
+			'default' => null,
+			'capability' => 'edit_theme_options',
+			'sanitize_callback'	=> 'sanitize_email'
+	));
+	
+	$wp_customize->add_control('email',array(
+			'type'	=> 'text',
+			'label'	=> __('Add email address.','getfit-lite'),
+			'section'	=> 'topbar_section'
+	));
+	
+	$wp_customize->add_setting('hide_topbar',array(
+			'default' => true,
+			'sanitize_callback' => 'getfit_lite_sanitize_checkbox',
+			'capability' => 'edit_theme_options',
+	));	 
 
-	$wp_customize->add_control(
-		'page_layout',
-		array(
-			'label'           => __( 'Page Layout', 'twentyseventeen' ),
-			'section'         => 'theme_options',
-			'type'            => 'radio',
-			'description'     => __( 'When the two-column layout is assigned, the page title is in one column and content is in the other.', 'twentyseventeen' ),
-			'choices'         => array(
-				'one-column' => __( 'One Column', 'twentyseventeen' ),
-				'two-column' => __( 'Two Column', 'twentyseventeen' ),
-			),
-			'active_callback' => 'twentyseventeen_is_view_with_layout_option',
-		)
-	);
-
-	/**
-	 * Filter number of front page sections in Twenty Seventeen.
-	 *
-	 * @since Twenty Seventeen 1.0
-	 *
-	 * @param int $num_sections Number of front page sections.
-	 */
-	$num_sections = apply_filters( 'twentyseventeen_front_page_sections', 4 );
-
-	// Create a setting and control for each of the sections available in the theme.
-	for ( $i = 1; $i < ( 1 + $num_sections ); $i++ ) {
-		$wp_customize->add_setting(
-			'panel_' . $i,
-			array(
-				'default'           => false,
-				'sanitize_callback' => 'absint',
-				'transport'         => 'postMessage',
-			)
-		);
-
-		$wp_customize->add_control(
-			'panel_' . $i,
-			array(
-				/* translators: %d: The front page section number. */
-				'label'           => sprintf( __( 'Front Page Section %d Content', 'twentyseventeen' ), $i ),
-				'description'     => ( 1 !== $i ? '' : __( 'Select pages to feature in each area from the dropdowns. Add an image to a section by setting a featured image in the page editor. Empty sections will not be displayed.', 'twentyseventeen' ) ),
-				'section'         => 'theme_options',
-				'type'            => 'dropdown-pages',
-				'allow_addition'  => true,
-				'active_callback' => 'twentyseventeen_is_static_front_page',
-			)
-		);
-
-		$wp_customize->selective_refresh->add_partial(
-			'panel_' . $i,
-			array(
-				'selector'            => '#panel' . $i,
-				'render_callback'     => 'twentyseventeen_front_page_section',
-				'container_inclusive' => true,
-			)
-		);
-	}
+	$wp_customize->add_control( 'hide_topbar', array(
+		   'settings' => 'hide_topbar',
+    	   'section'   => 'topbar_section',
+    	   'label'     => __('Check this to hide topbar','getfit-lite'),
+    	   'type'      => 'checkbox'
+     ));		
+	
 }
-add_action( 'customize_register', 'twentyseventeen_customize_register' );
+	
+	
+add_action( 'customize_register', 'getfit_lite_customize_register' );	
 
-/**
- * Sanitize the page layout options.
- *
- * @param string $input Page layout.
- */
-function twentyseventeen_sanitize_page_layout( $input ) {
-	$valid = array(
-		'one-column' => __( 'One Column', 'twentyseventeen' ),
-		'two-column' => __( 'Two Column', 'twentyseventeen' ),
-	);
+function getfit_lite_css(){
+		?>
+        <style>
+				a, 
+				.tm_client strong,
+				.postmeta a:hover,
+				#sidebar ul li a:hover,
+				.blog-post h3.entry-title,
+				.main-nav ul li a:hover,
+				.sitenav ul li a:hover, 
+				.sitenav ul li.current_page_item a, 
+				.sitenav ul li:hover a.parent,
+				.sitenav ul li ul.sub-menu li a:hover, 
+				.sitenav ul li.current_page_item ul.sub-menu li a:hover, 
+				.sitenav ul li ul.sub-menu li.current_page_item a,
+				.home-section .home-left h3,
+				.sitenav ul li a:after, .sitenav ul li.current_page_item a:after,
+				.sitenav ul li a:before, .sitenav ul li.current_page_item a:before
+				{
+					color:<?php echo esc_html(get_theme_mod('color_scheme','#e37e12')); ?>;
+				}
+				a.blog-more:hover,
+				#commentform input#submit,
+				input.search-submit,
+				.nivo-controlNav a.active,
+				.blog-date .date,
+				a.read-more,
+				.header-top,
+				.nivo-caption a.button,
+				.home-section .home-left a.ReadMore,
+				.nav-links .current, .nav-links a:hover,
+				.nivo-caption a.button,
+				.sitenav ul li:hover > ul{
+					background-color:<?php echo esc_html(get_theme_mod('color_scheme','#e37e12')); ?>;
+				}
+				a.morebutton{
+					border-color:<?php echo esc_html(get_theme_mod('color_scheme','#e37e12')); ?>;
+				}
+				.header-top{
+					background-color:<?php echo esc_html(get_theme_mod('topbar-color','#000000')); ?>;
+				}
+				#header{
+					background-color:<?php echo esc_html(get_theme_mod('header-color','#000000')); ?>;
+				}
+				@media screen and (max-width: 980px){
+					.header_right .sitenav ul li a:hover{
+							color:<?php echo esc_html(get_theme_mod('color_scheme','#e37e12')); ?> !important;
+						}	
+				}
+				.copyright-wrapper{background-color:<?php echo esc_html(get_theme_mod('footer-color','#282a2b')); ?>;}
+		</style>
+	<?php }
+add_action('wp_head','getfit_lite_css');
 
-	if ( array_key_exists( $input, $valid ) ) {
-		return $input;
-	}
-
-	return '';
+function getfit_lite_customize_preview_js() {
+	wp_enqueue_script( 'getfit-lite-customize-preview', get_template_directory_uri() . '/js/customize-preview.js', array( 'customize-preview' ), '20141216', true );
 }
-
-/**
- * Sanitize the colorscheme.
- *
- * @param string $input Color scheme.
- */
-function twentyseventeen_sanitize_colorscheme( $input ) {
-	$valid = array( 'light', 'dark', 'custom' );
-
-	if ( in_array( $input, $valid, true ) ) {
-		return $input;
-	}
-
-	return 'light';
-}
-
-/**
- * Render the site title for the selective refresh partial.
- *
- * @since Twenty Seventeen 1.0
- * @see twentyseventeen_customize_register()
- *
- * @return void
- */
-function twentyseventeen_customize_partial_blogname() {
-	bloginfo( 'name' );
-}
-
-/**
- * Render the site tagline for the selective refresh partial.
- *
- * @since Twenty Seventeen 1.0
- * @see twentyseventeen_customize_register()
- *
- * @return void
- */
-function twentyseventeen_customize_partial_blogdescription() {
-	bloginfo( 'description' );
-}
-
-/**
- * Return whether we're previewing the front page and it's a static page.
- */
-function twentyseventeen_is_static_front_page() {
-	return ( is_front_page() && ! is_home() );
-}
-
-/**
- * Return whether we're on a view that supports a one or two column layout.
- */
-function twentyseventeen_is_view_with_layout_option() {
-	// This option is available on all pages. It's also available on archives when there isn't a sidebar.
-	return ( is_page() || ( is_archive() && ! is_active_sidebar( 'sidebar-1' ) ) );
-}
-
-/**
- * Bind JS handlers to instantly live-preview changes.
- */
-function twentyseventeen_customize_preview_js() {
-	wp_enqueue_script( 'twentyseventeen-customize-preview', get_theme_file_uri( '/assets/js/customize-preview.js' ), array( 'customize-preview' ), '20161002', true );
-}
-add_action( 'customize_preview_init', 'twentyseventeen_customize_preview_js' );
-
-/**
- * Load dynamic logic for the customizer controls area.
- */
-function twentyseventeen_panels_js() {
-	wp_enqueue_script( 'twentyseventeen-customize-controls', get_theme_file_uri( '/assets/js/customize-controls.js' ), array(), '20161020', true );
-}
-add_action( 'customize_controls_enqueue_scripts', 'twentyseventeen_panels_js' );
+add_action( 'customize_preview_init', 'getfit_lite_customize_preview_js' );

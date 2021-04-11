@@ -1,20 +1,27 @@
 <?php
 /**
- * The sidebar containing the main widget area
+ * The Sidebar containing the main widget areas.
  *
- * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
- *
- * @package WordPress
- * @subpackage Twenty_Seventeen
- * @since 1.0
- * @version 1.0
+ * @package Getfit Lite
  */
-
-if ( ! is_active_sidebar( 'sidebar-1' ) ) {
-	return;
-}
 ?>
-
-<aside id="secondary" class="widget-area" role="complementary" aria-label="<?php esc_attr_e( 'Blog Sidebar', 'twentyseventeen' ); ?>">
-	<?php dynamic_sidebar( 'sidebar-1' ); ?>
-</aside><!-- #secondary -->
+<div id="sidebar">
+    
+    <?php if ( ! dynamic_sidebar( 'sidebar-1' ) ) : ?>
+        <aside id="archives" class="widget">
+            <h3 class="widget-title"><?php esc_attr_e( 'Archives', 'getfit-lite' ); ?></h3>
+            <ul>
+                <?php wp_get_archives( array( 'type' => 'monthly' ) ); ?>
+            </ul>
+        </aside>
+        <aside id="meta" class="widget">
+            <h3 class="widget-title"><?php esc_attr_e( 'Meta', 'getfit-lite' ); ?></h3>
+            <ul>
+                <?php wp_register(); ?>
+                <li><?php wp_loginout(); ?></li>
+                <?php wp_meta(); ?>
+            </ul>
+        </aside>
+    <?php endif; // end sidebar widget area ?>
+	
+</div><!-- sidebar -->

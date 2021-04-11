@@ -1,0 +1,5 @@
+Version 1.0
+i) Intial version Release
+
+Version 1.1
+i) Added skip to content button and made few change of theme layout.

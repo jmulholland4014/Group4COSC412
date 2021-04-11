@@ -1,59 +1,90 @@
 <?php
 /**
- * The front page template file
  *
- * If the user has selected a static page for their homepage, this is what will
- * appear.
- * Learn more: https://developer.wordpress.org/themes/basics/template-hierarchy/
- *
- * @package WordPress
- * @subpackage Twenty_Seventeen
- * @since 1.0
- * @version 1.0
+ * @package Getfit Lite
  */
 
-get_header(); ?>
+get_header(); 
+?>
 
-<div id="primary" class="content-area">
-	<main id="main" class="site-main" role="main">
+            
+<?php if ( is_front_page() && !is_home() ) { ?>
+	<?php $hideslide = get_theme_mod('hide_slider', '1'); ?>
+		<?php if($hideslide == ''){ ?>
+                <!-- Slider Section -->
+                <?php for($sld=7; $sld<10; $sld++) { ?>
+                	<?php if( get_theme_mod('page-setting'.$sld)) { ?>
+                	<?php $slidequery = new WP_query(array('page_id' => get_theme_mod('page-setting'.$sld,true))); ?>
+                	<?php while( $slidequery->have_posts() ) : $slidequery->the_post();
+                			$image = wp_get_attachment_url( get_post_thumbnail_id($post->ID));
+                			$img_arr[] = $image;
+               				$id_arr[] = $post->ID;
+                		endwhile;
+						wp_reset_postdata();
+                	}
+                }
+                ?>
+<?php if(!empty($id_arr)){ ?>
+        <div id="slider" class="nivoSlider">
+            <?php 
+            $i=1;
+            foreach($img_arr as $url){ ?>
+            <?php if(!empty($url)){ ?>
+            <img src="<?php echo esc_url($url); ?>" title="#slidecaption<?php echo esc_attr($i); ?>" />
+            <?php } ?>
+            <?php $i++; }  ?>
+        </div>   
+<?php 
+	$i=1;
+		foreach($id_arr as $id){ 
+		$title = get_the_title( $id ); 
+		$post = get_post($id); 
+?>                 
+<div id="slidecaption<?php echo esc_attr($i); ?>" class="nivo-html-caption">
+    <div class="top-bar">
+    	<h2><?php echo esc_html($title); ?></h2>
+    	<?php the_excerpt(); ?>
+        <a class="button" href="<?php the_permalink(); ?>"><?php echo esc_attr(get_theme_mod('slide_text',__('Join Now','getfit-lite')));?></a>
+    </div>
+</div>      
+    <?php $i++; } ?>       
+     </div>
+<div class="clear"></div>        
+</section>
+<?php } ?>
+<div class="clear"></div>
+<!-- Slider Section -->
+<?php } } ?>
 
-		<?php
-		// Show the selected front page content.
-		if ( have_posts() ) :
-			while ( have_posts() ) :
-				the_post();
-				get_template_part( 'template-parts/page/content', 'front-page' );
-			endwhile;
-		else :
-			get_template_part( 'template-parts/post/content', 'none' );
-		endif;
-		?>
-
-		<?php
-		// Get each of our panels and show the post data.
-		if ( 0 !== twentyseventeen_panel_count() || is_customize_preview() ) : // If we have pages to show.
-
-			/**
-			 * Filter number of front page sections in Twenty Seventeen.
-			 *
-			 * @since Twenty Seventeen 1.0
-			 *
-			 * @param int $num_sections Number of front page sections.
-			 */
-			$num_sections = apply_filters( 'twentyseventeen_front_page_sections', 4 );
-			global $twentyseventeencounter;
-
-			// Create a setting and control for each of the sections available in the theme.
-			for ( $i = 1; $i < ( 1 + $num_sections ); $i++ ) {
-				$twentyseventeencounter = $i;
-				twentyseventeen_front_page_section( null, $i );
-			}
-
-	endif; // The if ( 0 !== twentyseventeen_panel_count() ) ends here.
-		?>
-
-	</main><!-- #main -->
-</div><!-- #primary -->
-
-<?php
-get_footer();
+  <div class="main-container">
+    <div class="content-area">
+        <div class="middle-align content_sidebar">
+            <div class="site-main" id="sitemain">
+				<?php
+                if ( have_posts() ) :
+                    // Start the Loop.
+                    while ( have_posts() ) : the_post();
+                        /*
+                         * Include the post format-specific template for the content. If you want to
+                         * use this in a child theme, then include a file called called content-___.php
+                         * (where ___ is the post format) and that will be used instead.
+                         */
+                        get_template_part( 'content-page', get_post_format() );
+						
+                    endwhile;
+                    // Previous/next post navigation.
+                    the_posts_pagination();
+					wp_reset_postdata();
+                
+                else :
+                    // If no content, include the "No posts found" template.
+                     get_template_part( 'no-results' );
+                
+                endif;
+                ?>
+            </div>
+            <?php get_sidebar();?>
+            <div class="clear"></div>
+        </div>
+    </div><div class="clear"></div>
+<?php get_footer(); ?>

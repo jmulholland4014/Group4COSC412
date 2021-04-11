@@ -1,0 +1,163 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Getfit Lite\n"
+"POT-Creation-Date: 2018-06-06 18:14+0530\n"
+"PO-Revision-Date: 2018-06-06 18:14+0530\n"
+"Last-Translator: \n"
+"Language-Team: AlexaThemes Team <support@alexathemes.net>\n"
+"Language: English\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+
+#: content-page.php:23
+#: content.php:70
+#: image.php:33
+#: image.php:70
+msgid "Edit"
+msgstr ""
+
+#: content.php:14
+#: content.php:47
+#: content.php:57
+msgid ", "
+msgstr ""
+
+#: content.php:33
+msgid "Continue reading <span class=\"meta-nav\">&rarr;</span>"
+msgstr ""
+
+#: content.php:36
+#: image.php:64
+msgid "Pages:"
+msgstr ""
+
+#: content.php:67
+msgid "Leave a comment"
+msgstr ""
+
+#: content.php:67
+msgid "1 Comment"
+msgstr ""
+
+#: content.php:67
+msgid "% Comments"
+msgstr ""
+
+#: footer.php:14
+msgid "Y"
+msgstr ""
+
+#: front-page.php:47
+#: inc/customizer.php:112
+msgid "Join Now"
+msgstr ""
+
+#: functions.php:32
+msgid "Primary Menu"
+msgstr ""
+
+#: functions.php:45
+msgid "Blog Sidebar"
+msgstr ""
+
+#: functions.php:46
+msgid ""
+"Appears on blog page as sidebar. It will be displayed only in sidebar and "
+"single blog post."
+msgstr ""
+
+#: functions.php:55
+msgid "Page Sidebar"
+msgstr ""
+
+#: functions.php:56
+msgid "This widget is appear in pages as pages sidebar."
+msgstr ""
+
+#: image.php:38
+msgid "<span class=\"meta-nav\">&larr;</span> Previous"
+msgstr ""
+
+#: image.php:39
+msgid "Next <span class=\"meta-nav\">&rarr;</span>"
+msgstr ""
+
+#: inc/customizer.php:30
+msgid "Color Scheme"
+msgstr ""
+
+#: inc/customizer.php:31
+msgid "Select color from here."
+msgstr ""
+
+#: inc/customizer.php:44
+msgid "Topbar background color"
+msgstr ""
+
+#: inc/customizer.php:45
+msgid "Select topbar background color from here."
+msgstr ""
+
+#: inc/customizer.php:58
+msgid "Header background color"
+msgstr ""
+
+#: inc/customizer.php:59
+msgid "Select header background color from here."
+msgstr ""
+
+#: inc/customizer.php:69
+msgid "Slider Settings"
+msgstr ""
+
+#: inc/customizer.php:71
+msgid ""
+"Recommended image size (1420x567). Slider will be visible only when you "
+"select static front page."
+msgstr ""
+
+#: inc/customizer.php:83
+msgid "Select page for slide one:"
+msgstr ""
+
+#: inc/customizer.php:95
+msgid "Select page for slide two:"
+msgstr ""
+
+#: inc/customizer.php:107
+msgid "Select page for slide three:"
+msgstr ""
+
+#: inc/customizer.php:117
+msgid "Add slider link button text."
+msgstr ""
+
+#: inc/customizer.php:132
+msgid "Check this to hide slider"
+msgstr ""
+
+#: inc/customizer.php:143
+msgid "Topbar"
+msgstr ""
+
+#: inc/customizer.php:145
+msgid "Add content for topbar"
+msgstr ""
+
+#: inc/customizer.php:157
+msgid "Add contact number."
+msgstr ""
+
+#: inc/customizer.php:169
+msgid "Add email address."
+msgstr ""
+
+#: inc/customizer.php:182
+msgid "Check this to hide topbar"
+msgstr ""
