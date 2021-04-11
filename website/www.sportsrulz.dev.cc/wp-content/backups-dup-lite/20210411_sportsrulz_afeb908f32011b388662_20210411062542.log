@@ -1,0 +1,84 @@
+********************************************************************************
+DUPLICATOR-LITE PACKAGE-LOG: April 11, 2021 6:25 am
+NOTICE: Do NOT post to public sites or forums 
+********************************************************************************
+VERSION:	1.4.0
+WORDPRESS:	5.7
+PHP INFO:	7.3.1 | SAPI: apache2handler
+SERVER:		Apache/2.4.37 (Win32) OpenSSL/1.1.1a PHP/7.3.1 
+PHP TIME LIMIT: (0) no time limit imposed 
+PHP MAX MEMORY: 4294967296 (512M default) 
+MEMORY STACK: 6MB
+
+********************************************************************************
+DATABASE:
+********************************************************************************
+BUILD MODE:   MYSQLDUMP
+MYSQLTIMEOUT: 5000
+MYSQLDUMP:    Is Supported
+SQL CREATED: 20210411_sportsrulz_afeb908f32011b388662_20210411062542_database.sql
+SQL FILE SIZE: 681.56KB (697919)
+SQL FILE TIME: 2021-04-11 06:25:50
+SQL RUNTIME: 1.55 sec.
+
+********************************************************************************
+ARCHIVE (ZIP):
+********************************************************************************
+ARCHIVE DIR:  C:/Users/aphil/Sites/www.sportsrulz.dev.cc
+ARCHIVE FILE: 20210411_sportsrulz_afeb908f32011b388662_20210411062542_archive.zip
+FILTERS: *OFF*
+DIRS:
+	not set
+FILES:
+	not set
+EXTS:  not set
+----------------------------------------
+COMPRESSING
+SIZE:	64.21MB
+STATS:	Dirs 452 | Files 2,738
+SQL ADDED: 20210411_sportsrulz_afeb908f32011b388662_20210411062542_database.sql
+ZipArchive Object
+(
+    [status] => 0
+    [statusSys] => 0
+    [numFiles] => 3190
+    [filename] => C:\Users\aphil\Sites\www.sportsrulz.dev.cc\wp-content\backups-dup-lite\tmp\20210411_sportsrulz_afeb908f32011b388662_20210411062542_archive.zip
+    [comment] => 
+)
+
+FILE ADDED TO ZIP: 3189
+COMPRESSION RESULT: '1'
+COMPRESSED SIZE: 26.25MB
+ARCHIVE RUNTIME: 3.77 sec.
+MEMORY STACK: 6MB
+building installer
+add_extra_files1
+add_extra_files2
+add_extra_files3
+add_extra_files4
+Doing archive file check
+add_extra_files5
+add_extra_files6
+add_extra_files8
+Successfully opened zip C:/Users/aphil/Sites/www.sportsrulz.dev.cc/wp-content/backups-dup-lite/tmp/20210411_sportsrulz_afeb908f32011b388662_20210411062542_archive.zip
+Adding enhanced installer files to archive using ZipArchive
+Installer files added to archive
+Added to archive
+After ziparchive close when adding installer
+
+********************************************************************************
+INTEGRITY CHECKS:
+********************************************************************************
+SQL FILE: 681.56KB
+INSTALLER FILE: 63.95KB
+ARCHIVE FILE: 27.76MB 
+EXPECTED FILE/DIRECTORY COUNT: 3,190
+ACTUAL FILE/DIRECTORY COUNT: 3,189
+ARCHIVE CONSISTENCY TEST: Pass
+
+********************************************************************************
+RECORD ID:[1]
+TOTAL PROCESS RUNTIME: 5.90 sec.
+PEAK PHP MEMORY USED: 8MB
+DONE PROCESSING => 20210411_sportsrulz April 11, 2021 6:25 am
+
